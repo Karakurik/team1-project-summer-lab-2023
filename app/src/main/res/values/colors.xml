@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="background">#000000</color>
+    <color name="primary">#00FF00</color>
+    <color name="element_bg">#232323</color>
+    <color name="bull">#00FF00</color>
+    <color name="cow">#FFFF00</color>
+    <color name="miss">#696969</color>
+    <color name="text">#FFFFFF</color>
 </resources>
