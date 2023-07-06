@@ -50,7 +50,7 @@
         layout="@layout/input_letter"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/letter_5" />
 
