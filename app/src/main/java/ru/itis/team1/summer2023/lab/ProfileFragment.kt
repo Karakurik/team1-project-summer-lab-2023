@@ -53,4 +53,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         bmp = Bitmap.createScaledBitmap(bmp, width, height, false)
         setImageBitmap(bmp)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
