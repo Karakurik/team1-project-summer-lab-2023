@@ -13,4 +13,6 @@
     <string name="games_won_text">Games won: %1$.1f%%</string>
     <string name="back_button_text">Back</string>
     <string name="dictionary_button_text">Dictionary</string>
+    <string name="dictionary_title">Dictionary</string>
+    <string name="empty_list_text">There is nothing to see here, yet</string>
 </resources>
