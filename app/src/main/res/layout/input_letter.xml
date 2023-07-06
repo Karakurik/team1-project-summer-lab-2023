@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tv_letter"
+        android:id="@+id/et_letter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pixel_font"
@@ -16,7 +16,7 @@
         android:inputType="text"
         android:maxLength="1"
         android:textAllCaps="true"
-        android:textColor="@color/miss"
+        android:textColor="@color/text"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
