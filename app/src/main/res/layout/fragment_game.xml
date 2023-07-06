@@ -13,138 +13,63 @@
 
 
     <include
-        android:id="@+id/layout_1"
+        android:id="@+id/layout_word_1"
         layout="@layout/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/layout_2"
+        android:id="@+id/layout_word_2"
         layout="@layout/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_1" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_word_1" />
 
     <include
-        android:id="@+id/layout_3"
+        android:id="@+id/layout_word_3"
         layout="@layout/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_2" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_word_2" />
 
     <include
-        android:id="@+id/layout_4"
+        android:id="@+id/layout_word_4"
         layout="@layout/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_3" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_word_3" />
 
     <include
-        android:id="@+id/layout_5"
+        android:id="@+id/layout_word_5"
         layout="@layout/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_4" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_word_4" />
 
     <include
-        android:id="@+id/layout_6"
+        android:id="@+id/layout_word_6"
         layout="@layout/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_5" />
-
-
-    <include
-        android:id="@+id/input_letter_1"
-        layout="@layout/input_letter"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/input_letter_2"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include
-        android:id="@+id/input_letter_2"
-        layout="@layout/input_letter"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/input_letter_3"
-        app:layout_constraintStart_toEndOf="@+id/input_letter_1" />
-
-    <include
-        android:id="@+id/input_letter_3"
-        layout="@layout/input_letter"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/input_letter_4"
-        app:layout_constraintStart_toEndOf="@+id/input_letter_2" />
-
-    <include
-        android:id="@+id/input_letter_4"
-        layout="@layout/input_letter"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/input_letter_5"
-        app:layout_constraintStart_toEndOf="@+id/input_letter_3" />
-
-    <include
-        android:id="@+id/input_letter_5"
-        layout="@layout/input_letter"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/input_letter_6"
-        app:layout_constraintStart_toEndOf="@+id/input_letter_4" />
-
-    <include
-        android:id="@+id/input_letter_6"
-        layout="@layout/input_letter"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/input_letter_5" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_word_5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
