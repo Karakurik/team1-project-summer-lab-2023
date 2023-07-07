@@ -3,11 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/rulesFragment">
+    app:startDestination="@id/mainFragment">
+  
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="ru.itis.team1.summer2023.lab.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/rulesFragment"
         android:name="ru.itis.team1.summer2023.lab.RulesFragment"
         android:label="RulesFragment"
         tools:layout="@layout/fragment_rules">
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ru.itis.team1.summer2023.lab.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_dictionaryFragment"
+            app:destination="@id/dictionaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="ru.itis.team1.summer2023.lab.DictionaryFragment"
+        android:label="DictionaryFragment"
+        tools:layout="@layout/fragment_dictionary" />
+  
 </navigation>

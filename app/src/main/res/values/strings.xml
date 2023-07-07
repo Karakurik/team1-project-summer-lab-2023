@@ -8,4 +8,21 @@
     <string name="lets_go_message">Let\'s go!</string>
     <string name="respond">RESPOND</string>
     <string name="username_hint">Hacker2004</string>
+    <string name="game_name">passWordly</string>
+    <string name="difficulty_text">Difficulty</string>
+    <string name="easy_difficulty_selector_text">Easy</string>
+    <string name="normal_difficulty_selector_text">Normal</string>
+    <string name="hard_difficulty_selector_text">Hard</string>
+    <string name="start_button_text">Start</string>
+    <string name="rules_button_text">Rules</string>
+    <string name="profile_button_text">Profile</string>
+    <string name="profile_title">Profile</string>
+    <string name="total_games_text">Total games: %1$d</string>
+    <string name="games_won_text">Games won: %1$.1f%%</string>
+    <string name="back_button_text">Back</string>
+    <string name="dictionary_button_text">Dictionary</string>
+    <string name="dictionary_title">Dictionary</string>
+    <string name="empty_list_text">There is nothing to see here, yet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
