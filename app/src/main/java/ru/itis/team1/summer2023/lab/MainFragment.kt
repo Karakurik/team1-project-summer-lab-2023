@@ -27,10 +27,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(R.id.action_mainFragment_to_profileFragment)
             }
             btnStart.setOnClickListener {
-                // TODO: navigate to game fragment
+                findNavController().navigate(R.id.action_mainFragment_to_gameFragment)
             }
             btnRules.setOnClickListener {
-                // TODO: navigate to rules fragment
+                findNavController().navigate(R.id.action_mainFragment_to_rulesFragment)
             }
         }
     }
