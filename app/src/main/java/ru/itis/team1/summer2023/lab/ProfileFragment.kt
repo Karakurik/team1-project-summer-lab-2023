@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.itis.team1.summer2023.lab.databinding.FragmentProfileBinding
 
-
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var binding: FragmentProfileBinding? = null
 
@@ -43,7 +42,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 findNavController().popBackStack()
             }
             btnDictionary.setOnClickListener {
-                // TODO: navigate to dictionary fragment
+                findNavController().navigate(R.id.action_profileFragment_to_dictionaryFragment)
             }
         }
     }
