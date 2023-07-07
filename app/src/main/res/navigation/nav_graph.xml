@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_mainFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_rulesFragment"
+            app:destination="@id/rulesFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
     </fragment>
     <fragment
         android:id="@+id/rulesFragment"
@@ -34,5 +40,10 @@
         android:name="ru.itis.team1.summer2023.lab.DictionaryFragment"
         android:label="DictionaryFragment"
         tools:layout="@layout/fragment_dictionary" />
-  
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="ru.itis.team1.summer2023.lab.GameFragment"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
+
 </navigation>

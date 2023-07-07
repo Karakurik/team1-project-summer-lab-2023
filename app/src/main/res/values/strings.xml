@@ -23,6 +23,4 @@
     <string name="dictionary_button_text">Dictionary</string>
     <string name="dictionary_title">Dictionary</string>
     <string name="empty_list_text">There is nothing to see here, yet</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
