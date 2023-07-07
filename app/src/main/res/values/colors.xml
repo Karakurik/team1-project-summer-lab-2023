@@ -9,4 +9,5 @@
     <color name="cow">#FFFF00</color>
     <color name="miss">#696969</color>
     <color name="text">#FFFFFF</color>
+    <color name="overlay_background">#CC000000</color>
 </resources>
