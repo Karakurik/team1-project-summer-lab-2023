@@ -12,11 +12,15 @@ import ru.itis.team1.summer2023.lab.Difficulty.*
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
 import ru.itis.team1.summer2023.lab.databinding.InputLetterBinding
 import ru.itis.team1.summer2023.lab.databinding.WordBinding
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStream
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
+    private val dictionary = HashSet<String>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
@@ -27,9 +31,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             NORMAL -> 5
             HARD -> 6
         }
-        /* TODO:
-        проверять введенные слова, возможно стереть буквы?
-        */
+
+        createDict(difficulty)
+
         binding?.run {
 
             val wordsList = listOf(
@@ -98,6 +102,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                                 } else {
                                     clearWord(lettersList)
                                 }
+                                userInput.clear()
                             }
                         }
                     })
@@ -105,6 +110,17 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             }
         }
 
+    }
+
+    private fun createDict(difficulty: Difficulty) {
+        val inputStream = when (difficulty) {
+            EASY -> context?.assets?.open("words_4")
+            NORMAL -> context?.assets?.open("words_5")
+            HARD -> context?.assets?.open("words_6")
+        }
+        inputStream?.bufferedReader()?.forEachLine {
+            dictionary.add(it)
+        }
     }
 
     private fun adjustDifficulty(lettersBindingList: List<InputLetterBinding>, difficulty: Difficulty) {
@@ -160,7 +176,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
 
     private fun verifyWord(userInput: String): Boolean {
-        return true
+        return dictionary.contains(userInput.lowercase())
     }
 
     override fun onDestroyView() {
