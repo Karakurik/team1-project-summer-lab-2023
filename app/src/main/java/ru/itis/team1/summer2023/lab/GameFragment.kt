@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import com.google.android.material.textfield.TextInputEditText
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
-import ru.itis.team1.summer2023.lab.databinding.WordBinding
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
@@ -18,18 +17,18 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
-
+        /* TODO:
+        проверять введенные слова, менять длину слов, возможно стереть буквы?
+        */
         binding?.run {
-            val wordsList: List<WordBinding> = listOf(
+            listOf(
                 layoutWord1,
                 layoutWord2,
                 layoutWord3,
                 layoutWord4,
                 layoutWord5,
                 layoutWord6
-            )
-
-            wordsList.forEach { word ->
+            ).forEach { word ->
                 val lettersList: List<TextInputEditText> = listOf(
                     word.letter1.etLetter,
                     word.letter2.etLetter,
@@ -50,6 +49,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
                 for (i in 0 until size) {
                     lettersList[i].addTextChangedListener(object : TextWatcher {
+
                         override fun beforeTextChanged(
                             p0: CharSequence?,
                             p1: Int,
