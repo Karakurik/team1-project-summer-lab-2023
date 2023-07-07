@@ -8,12 +8,15 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import ru.itis.team1.summer2023.lab.Difficulty.*
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
 import ru.itis.team1.summer2023.lab.databinding.InputLetterBinding
 import ru.itis.team1.summer2023.lab.databinding.WordBinding
+import java.util.TreeSet
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
@@ -110,9 +113,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             userInput.append(lettersList[i].text.toString())
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
-                                    convertWord(lettersList, answer)
+                                    convertWord(lettersList, answer, difficulty)
                                     if (word == wordsList[size - 1]) {
-                                        finishGame(false)
+                                        finishGame(false, answer, difficulty)
                                     }
                                     openNextWord(iterator)
                                 } else {
@@ -172,7 +175,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
     }
 
-    private fun convertWord(lettersList: List<TextInputEditText>, answer: String) {
+    private fun convertWord(lettersList: List<TextInputEditText>, answer: String, difficulty: Difficulty) {
         var isAnswer = true
         for ((i, letter) in lettersList.withIndex()) {
 
@@ -201,12 +204,58 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         }
         if (isAnswer) {
-            finishGame(true)
+            finishGame(true, answer, difficulty)
         }
     }
 
-    //        TODO:
-    private fun finishGame(isWin: Boolean) {
+    private fun finishGame(isWin: Boolean, answer: String, difficulty: Difficulty) {
+        requireActivity().getPreferences(Context.MODE_PRIVATE).run {
+            val total = getInt("TOTAL_GAMES", 0) + 1
+            edit { putInt("TOTAL_GAMES", total) }
+
+            if (isWin) {
+                val won = getInt("GAMES_WON", 0) + 1
+                val trophiesKey = when (difficulty) {
+                    EASY -> "BRONZE_TROPHIES"
+                    NORMAL -> "SILVER_TROPHIES"
+                    HARD -> "GOLD_TROPHIES"
+                }
+                val trophies = getInt(trophiesKey, 0) + 1
+                val set = TreeSet(getOrderedStringCollection("FOUND_WORDS"))
+                // TODO: add definitions to answers
+                set.add(answer)
+
+                edit {
+                    putInt("GAMES_WON", won)
+                    putInt(trophiesKey, trophies)
+                    putOrderedStringCollection("FOUND_WORDS", set)
+                }
+            }
+        }
+
+        // TODO: add more responses
+        val oldmanResponseId: Int = if (isWin) {
+            listOf(
+                R.string.game_win_text_1
+            ).random()
+        } else {
+            listOf(
+                R.string.game_lose_text_1
+            ).random()
+        }
+        var oldmanResponse = resources.getString(oldmanResponseId)
+        if (isWin) oldmanResponse = oldmanResponse.format(answer)
+
+        binding?.layoutOverlay?.run {
+            tvTitle.text = resources.getString(if (isWin) R.string.victory_text else R.string.defeat_text)
+            tvOldman.text = oldmanResponse
+
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            root.visibility = View.VISIBLE
+        }
     }
 
     private fun clearWord(lettersList: List<TextInputEditText>) {
