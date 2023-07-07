@@ -2,7 +2,6 @@ package ru.itis.team1.summer2023.lab
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import ru.itis.team1.summer2023.lab.databinding.FragmentRulesBinding
 
@@ -17,13 +16,17 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
             btnRespond.setOnClickListener{
 
                 if (checkIfValid(etM1Player.text.toString())) {
+                    show(ivOldman2)
                     show(tvM2Oldman)
                     if (clickCount == 1) {
+                        show(ivPlayer2)
                         show(tvM2Player)
+                        show(ivOldman3)
                         show(tvM3Oldman)
                     } else if (clickCount == 2) {
+                        show(ivPlayer3)
                         show(tvM3Player)
-                        btnRespond.text = "got it"
+                        btnRespond.text = resources.getString(R.string.got_it_message)
                     }
                     clickCount++
                 }

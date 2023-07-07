@@ -9,6 +9,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_oldman1"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/oldman"
+            app:layout_constraintBottom_toBottomOf="@id/tv_m1_oldman"
+            app:layout_constraintEnd_toStartOf="@id/tv_m1_oldman" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,6 +35,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/tv_m1_oldman"/>
+
+        <ImageView
+            android:id="@+id/iv_player1"
+            android:layout_width="44dp"
+            android:layout_height="36dp"
+            android:src="@drawable/anonymous"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toTopOf="@id/ti_m1_player"
+            app:layout_constraintStart_toEndOf="@id/ti_m1_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="4dp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:visibility="visible"
             android:layout_width="match_parent"
@@ -51,6 +72,16 @@
                 android:id="@+id/et_m1_player">
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:id="@+id/iv_oldman2"
+            android:visibility="gone"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="280dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/oldman"
+            app:layout_constraintBottom_toBottomOf="@id/tv_m2_oldman"
+            app:layout_constraintEnd_toStartOf="@id/tv_m2_oldman" />
         <TextView
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -70,6 +101,17 @@
             app:layout_constraintStart_toStartOf="parent" 
             android:id="@+id/tv_m2_oldman"/>
 
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_player2"
+            android:layout_width="44dp"
+            android:layout_height="36dp"
+            android:src="@drawable/anonymous"
+            app:layout_constraintTop_toTopOf="@id/tv_m2_player"
+            app:layout_constraintStart_toEndOf="@id/tv_m2_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="4dp"/>
+
         <TextView
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -86,8 +128,18 @@
             android:textSize="10sp"
             app:layout_constraintTop_toBottomOf="@id/tv_m2_oldman"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" 
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/tv_m2_player"/>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_oldman3"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="244dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/oldman"
+            app:layout_constraintBottom_toBottomOf="@id/tv_m3_oldman"
+            app:layout_constraintEnd_toStartOf="@id/tv_m3_oldman" />
         <TextView
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -107,12 +159,24 @@
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/tv_m3_oldman"/>
 
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_player3"
+            android:layout_width="44dp"
+            android:layout_height="36dp"
+            android:src="@drawable/anonymous"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/tv_m3_player"
+            app:layout_constraintStart_toEndOf="@id/tv_m3_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="4dp"/>
+
         <TextView
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="300dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="48dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/message"
             android:backgroundTint="@color/element_bg"
