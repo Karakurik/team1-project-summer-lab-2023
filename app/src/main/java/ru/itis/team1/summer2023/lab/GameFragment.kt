@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import ru.itis.team1.summer2023.lab.Difficulty.*
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
 import ru.itis.team1.summer2023.lab.databinding.InputLetterBinding
+import ru.itis.team1.summer2023.lab.databinding.WordBinding
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
@@ -27,18 +28,22 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             HARD -> 6
         }
         /* TODO:
-        проверять введенные слова, менять длину слов, возможно стереть буквы?
+        проверять введенные слова, возможно стереть буквы?
         */
         binding?.run {
 
-            listOf(
+            val wordsList = listOf(
                 layoutWord1,
                 layoutWord2,
                 layoutWord3,
                 layoutWord4,
                 layoutWord5,
                 layoutWord6
-            ).forEach { word ->
+            )
+            val iterator = wordsList.listIterator()
+            openNextWord(iterator)
+
+            wordsList.forEach { word ->
 
                 val lettersBindingList: List<InputLetterBinding> = listOf(
                     word.letter1,
@@ -53,10 +58,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
                 val lettersList: List<TextInputEditText> =
                     lettersBindingList.map { letter -> letter.etLetter }
-
-
-
-                lettersList[0].isEnabled = true
 
 //                ответ
                 val str = "HELLO"
@@ -93,6 +94,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
                                     convertWord(lettersList, str)
+                                    openNextWord(iterator)
                                 } else {
                                     clearWord(lettersList)
                                 }
@@ -113,6 +115,12 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             lettersBindingList[5].root.visibility = View.GONE
         }
 
+    }
+
+    private fun openNextWord(iterator: ListIterator<WordBinding>) {
+        if (iterator.hasNext()) {
+            iterator.next().letter1.etLetter.isEnabled = true
+        }
     }
 
     private fun convertWord(lettersList: List<TextInputEditText>, answer: String) {
