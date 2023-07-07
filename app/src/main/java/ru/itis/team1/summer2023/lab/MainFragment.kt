@@ -27,7 +27,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(R.id.action_mainFragment_to_profileFragment)
             }
             btnStart.setOnClickListener {
-                findNavController().navigate(R.id.action_mainFragment_to_gameFragment)
+                findNavController().navigate(
+                    R.id.action_mainFragment_to_gameFragment,
+                    GameFragment.createBundle(selectedDifficulty))
             }
             btnRules.setOnClickListener {
                 findNavController().navigate(R.id.action_mainFragment_to_rulesFragment)
