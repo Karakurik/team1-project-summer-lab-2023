@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.os.bundleOf
@@ -65,6 +66,21 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 val userInput = java.lang.StringBuilder()
 
                 for (i in 0 until size) {
+
+                    lettersList[i].setOnKeyListener(object : View.OnKeyListener {
+                        override fun onKey(p0: View?, keyCode: Int, p2: KeyEvent?): Boolean {
+                            if (keyCode == KeyEvent.KEYCODE_DEL && i > 0) {
+                                lettersList[i - 1].text?.clear()
+                                lettersList[i - 1].isEnabled = true
+                                lettersList[i - 1].requestFocus()
+                                lettersList[i].isEnabled = false
+                                return true
+                            }
+                            return false
+                        }
+
+                    })
+
                     lettersList[i].addTextChangedListener(object : TextWatcher {
 
                         override fun beforeTextChanged(
