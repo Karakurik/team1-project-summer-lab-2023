@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Team1projectsummerlab2023" parent="Base.Theme.Team1projectsummerlab2023" />
+    <style name="Theme.Team1projectsummerlab2023" parent="Base.Theme.Team1projectsummerlab2023">
+        <item name="fontFamily">@font/joystix</item>
+    </style>
 </resources>
