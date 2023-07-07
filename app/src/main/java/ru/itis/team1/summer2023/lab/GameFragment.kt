@@ -1,6 +1,7 @@
 package ru.itis.team1.summer2023.lab
 
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,9 +13,6 @@ import ru.itis.team1.summer2023.lab.Difficulty.*
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
 import ru.itis.team1.summer2023.lab.databinding.InputLetterBinding
 import ru.itis.team1.summer2023.lab.databinding.WordBinding
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStream
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
@@ -33,6 +31,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
 
         createDict(difficulty)
+        val answer = generateAnswer()
 
         binding?.run {
 
@@ -63,8 +62,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 val lettersList: List<TextInputEditText> =
                     lettersBindingList.map { letter -> letter.etLetter }
 
-//                ответ
-                val str = "HELLO"
                 val userInput = java.lang.StringBuilder()
 
                 for (i in 0 until size) {
@@ -97,7 +94,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             userInput.append(lettersList[i].text.toString())
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
-                                    convertWord(lettersList, str)
+                                    convertWord(lettersList, answer)
+                                    if (word == wordsList[size - 1]) {
+                                        finishGame(false)
+                                    }
                                     openNextWord(iterator)
                                 } else {
                                     clearWord(lettersList)
@@ -114,16 +114,33 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun createDict(difficulty: Difficulty) {
         val inputStream = when (difficulty) {
-            EASY -> context?.assets?.open("words_4")
-            NORMAL -> context?.assets?.open("words_5")
-            HARD -> context?.assets?.open("words_6")
+            EASY -> requireContext().assets.open("words_4")
+            NORMAL -> requireContext().assets.open("words_5")
+            HARD -> requireContext().assets.open("words_6")
         }
-        inputStream?.bufferedReader()?.forEachLine {
+        inputStream.bufferedReader().forEachLine {
             dictionary.add(it)
         }
     }
 
-    private fun adjustDifficulty(lettersBindingList: List<InputLetterBinding>, difficulty: Difficulty) {
+    private fun generateAnswer(): String {
+        val foundWords = requireActivity()
+            .getPreferences(Context.MODE_PRIVATE)
+            .getOrderedStringCollection("FOUND_WORDS")
+//            TODO проверить что остались неотгаданные слова
+        var str: String
+        while (true) {
+            str = dictionary.random()
+            if (!foundWords.contains (str)) {
+                return str
+            }
+        }
+    }
+
+    private fun adjustDifficulty(
+        lettersBindingList: List<InputLetterBinding>,
+        difficulty: Difficulty
+    ) {
         if (difficulty == NORMAL) {
             lettersBindingList[5].root.visibility = View.GONE
         } else if (difficulty == EASY) {
@@ -140,6 +157,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     private fun convertWord(lettersList: List<TextInputEditText>, answer: String) {
+        var isAnswer = true
         for ((i, letter) in lettersList.withIndex()) {
 
             val value = letter.text.toString()
@@ -150,20 +168,29 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 do {
                     index = answer.indexOf(value, index + 1, true)
                     if (index == i) {
-                        letter.setTextColor(resources.getColor(R.color.bull, context?.theme))
+                        letter.setTextColor(requireContext().getColor(R.color.bull))
                         flag = true
                     }
                 } while (index != -1 && !flag)
 
                 if (!flag) {
-                    letter.setTextColor(resources.getColor(R.color.cow, context?.theme))
+                    isAnswer = false
+                    letter.setTextColor(requireContext().getColor(R.color.cow))
                 }
 
             } else {
-                letter.setTextColor(resources.getColor(R.color.miss, context?.theme))
+                isAnswer = false
+                letter.setTextColor(requireContext().getColor(R.color.miss))
             }
 
         }
+        if (isAnswer) {
+            finishGame(true)
+        }
+    }
+
+    //        TODO:
+    private fun finishGame(isWin: Boolean) {
     }
 
     private fun clearWord(lettersList: List<TextInputEditText>) {
