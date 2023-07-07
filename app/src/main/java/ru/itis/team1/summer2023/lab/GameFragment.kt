@@ -1,17 +1,11 @@
 package ru.itis.team1.summer2023.lab
 
-import android.content.res.ColorStateList
-import android.graphics.Color
+
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import com.google.android.material.textfield.TextInputEditText
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
 import ru.itis.team1.summer2023.lab.databinding.WordBinding
@@ -44,49 +38,52 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                     word.letter5.etLetter,
                     word.letter6.etLetter
                 )
-                var flag = false
-//                TODO ломается когда есть скрытые элементы
-                for ((i, letter) in lettersList.withIndex()) {
-                    if (letter.visibility == View.VISIBLE
 
-                    ) {
-                        if ((i + 1) < lettersList.size
-                            && lettersList[i + 1].visibility == View.VISIBLE
-                        ) {
-                            letter.addTextChangedListener(object : TextWatcher {
-                                override fun beforeTextChanged(
-                                    p0: CharSequence?,
-                                    p1: Int,
-                                    p2: Int,
-                                    p3: Int
-                                ) {
-                                }
+                lettersList[0].isEnabled = true
 
-                                override fun onTextChanged(
-                                    p0: CharSequence?,
-                                    p1: Int,
-                                    p2: Int,
-                                    p3: Int
-                                ) {
-                                    if (letter.text.toString().isNotEmpty()) {
-                                        letter.focusSearch(View.FOCUS_RIGHT).requestFocus()
-                                    }
-                                }
+//                количество видимых элементов
+                val size = 5
 
-                                override fun afterTextChanged(p0: Editable?) {}
-                            })
-                        } else while (!flag) {
-                            if (letter.text.toString().isNotEmpty()) flag = true
-                        }
-                    }
-                }
-
+//                ответ
                 val str = "HELLO"
+                val userInput = java.lang.StringBuilder()
 
-                if (verifyWord() && flag) {
-                    convertWord(lettersList, str)
-                } else {
+                for (i in 0 until size) {
+                    lettersList[i].addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+                        }
 
+                        override fun onTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+                            if (i < size - 1) {
+                                lettersList[i + 1].isEnabled = true
+                                if (lettersList[i].text.toString().isNotEmpty()) {
+                                    lettersList[i + 1].requestFocus()
+                                }
+                            }
+                        }
+
+                        override fun afterTextChanged(p0: Editable?) {
+                            lettersList[i].isEnabled = false
+                            userInput.append(lettersList[i].text.toString())
+                            if (i == size - 1) {
+                                if (verifyWord(userInput.toString())) {
+                                    convertWord(lettersList, str)
+                                } else {
+                                    clearWord(lettersList)
+                                }
+                            }
+                        }
+                    })
                 }
             }
         }
@@ -95,21 +92,41 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun convertWord(lettersList: List<TextInputEditText>, answer: String) {
         for ((i, letter) in lettersList.withIndex()) {
-            letter.inputType = InputType.TYPE_NULL
-            val value: String = letter.text.toString()
-            if (answer.contains(value)) {
-                if (answer.indexOf(value) == i) {
-                    letter.setTextColor(resources.getColor(R.color.bull))
-                } else {
-                    letter.setTextColor(resources.getColor(R.color.cow))
+
+            val value = letter.text.toString()
+
+            if (answer.contains(value, true)) {
+                var flag = false
+                var index = -1
+                do {
+                    index = answer.indexOf(value, index + 1, true)
+                    if (index == i) {
+                        letter.setTextColor(resources.getColor(R.color.bull, context?.theme))
+                        flag = true
+                    }
+                } while (index != -1 && !flag)
+
+                if (!flag) {
+                    letter.setTextColor(resources.getColor(R.color.cow, context?.theme))
                 }
+
             } else {
-                letter.setTextColor(resources.getColor(R.color.miss))
+                letter.setTextColor(resources.getColor(R.color.miss, context?.theme))
             }
+
         }
     }
 
-    private fun verifyWord(): Boolean {
+    private fun clearWord(lettersList: List<TextInputEditText>) {
+        lettersList.forEach { letter ->
+            letter.text?.clear()
+        }
+        lettersList[0].isEnabled = true
+        lettersList[0].requestFocus()
+    }
+
+
+    private fun verifyWord(userInput: String): Boolean {
         return true
     }
 
