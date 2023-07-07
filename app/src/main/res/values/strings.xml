@@ -13,4 +13,6 @@
     <string name="games_won_text">Games won: %1$.1f%%</string>
     <string name="back_button_text">Back</string>
     <string name="dictionary_button_text">Dictionary</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
