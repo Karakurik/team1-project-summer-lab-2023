@@ -58,8 +58,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/ti_m1_player"
-            android:hint="@string/username_hint">
+            android:hint="@string/username_hint"
+            app:hintAnimationEnabled="false"
+            android:maxLines="1">
             <com.google.android.material.textfield.TextInputEditText
+                android:inputType="text"
+                android:maxLines="1"
                 android:maxLength="25"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
