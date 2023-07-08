@@ -22,7 +22,7 @@ import java.util.TreeSet
 class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
-    private val dictionary = HashSet<String>()
+    private val dictionary = HashMap<String, String>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
@@ -118,7 +118,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
                                     convertWord(lettersList, answer, difficulty)
-                                    if (word == wordsList[size - 1]) {
+                                    if (word == wordsList[wordsList.size - 1]) {
                                         finishGame(false, answer, difficulty)
                                     }
                                     openNextWord(iterator)
@@ -137,12 +137,14 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun createDict(difficulty: Difficulty) {
         val inputStream = when (difficulty) {
-            EASY -> requireContext().assets.open("words_4")
-            NORMAL -> requireContext().assets.open("words_5")
-            HARD -> requireContext().assets.open("words_6")
+            EASY -> requireContext().assets.open("dictionary_4")
+            NORMAL -> requireContext().assets.open("dictionary_5")
+            HARD -> requireContext().assets.open("dictionary_6")
         }
+        var str: List<String>
         inputStream.bufferedReader().forEachLine {
-            dictionary.add(it)
+            str = it.split("=")
+            dictionary[str[0]] = str[1]
         }
     }
 
@@ -153,7 +155,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 //            TODO проверить что остались неотгаданные слова
         var str: String
         while (true) {
-            str = dictionary.random()
+            str = dictionary.keys.random()
             if (!foundWords.contains (str)) {
                 return str
             }
@@ -226,13 +228,15 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 }
                 val trophies = getInt(trophiesKey, 0) + 1
                 val set = TreeSet(getOrderedStringCollection("FOUND_WORDS"))
-                // TODO: add definitions to answers
+                val setOfMeanings = TreeSet(getOrderedStringCollection("FOUND_WORDS_MEANINGS"))
                 set.add(answer)
+                setOfMeanings.add(dictionary[answer])
 
                 edit {
                     putInt("GAMES_WON", won)
                     putInt(trophiesKey, trophies)
                     putOrderedStringCollection("FOUND_WORDS", set)
+                    putOrderedStringCollection("FOUND_WORDS_MEANINGS", setOfMeanings)
                 }
             }
         }
@@ -272,7 +276,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
 
     private fun verifyWord(userInput: String): Boolean {
-        return dictionary.contains(userInput.lowercase())
+        return dictionary.keys.contains(userInput.lowercase())
     }
 
     override fun onDestroyView() {
