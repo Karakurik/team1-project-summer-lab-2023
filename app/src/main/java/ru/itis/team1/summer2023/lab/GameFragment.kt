@@ -51,7 +51,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
             wordsList.forEach { word ->
 
-                val lettersBindingList: List<InputLetterBinding> = listOf(
+                val lettersBindingList: MutableList<InputLetterBinding> = mutableListOf(
                     word.letter1,
                     word.letter2,
                     word.letter3,
@@ -162,14 +162,17 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     private fun adjustDifficulty(
-        lettersBindingList: List<InputLetterBinding>,
+        lettersBindingList: MutableList<InputLetterBinding>,
         difficulty: Difficulty
     ) {
         if (difficulty == NORMAL) {
             lettersBindingList[5].root.visibility = View.GONE
+            lettersBindingList.removeAt(5)
         } else if (difficulty == EASY) {
-            lettersBindingList[4].root.visibility = View.GONE
             lettersBindingList[5].root.visibility = View.GONE
+            lettersBindingList[4].root.visibility = View.GONE
+            lettersBindingList.removeAt(5)
+            lettersBindingList.removeAt(4)
         }
 
     }
