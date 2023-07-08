@@ -28,7 +28,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 tvTotal.text = getString(R.string.total_games_text, totalGames)
                 val gamesWonPercentage = when (totalGames) {
                     0 -> 0.0
-                    else -> getInt("GAMES_WON", 0).toDouble() / totalGames.toDouble()
+                    else -> getInt("GAMES_WON", 0).toDouble() / totalGames.toDouble() * 100.0
                 }
                 tvPercentage.text =
                     getString(R.string.games_won_text, gamesWonPercentage)
