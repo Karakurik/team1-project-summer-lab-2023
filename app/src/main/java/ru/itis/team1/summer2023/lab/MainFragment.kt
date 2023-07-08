@@ -1,5 +1,7 @@
 package ru.itis.team1.summer2023.lab
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
@@ -17,6 +19,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding = FragmentMainBinding.bind(view)
 
         changeDifficulty(selectedDifficulty)
+
+        val pref: SharedPreferences = requireContext().getSharedPreferences("Default",
+            Context.MODE_PRIVATE
+        )
+        if (pref.getString("PLAYER_NAME", "Hacker") == "Hacker") {
+            findNavController().navigate(R.id.action_mainFragment_to_rulesFragment)
+        }
 
         binding?.apply {
             btnEasy.setOnClickListener { changeDifficulty(Difficulty.EASY) }

@@ -58,9 +58,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/ti_m1_player"
+            android:maxLines="1"
             android:hint="@string/username_hint"
-            app:hintAnimationEnabled="false"
-            android:maxLines="1">
+            app:hintEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
                 android:inputType="text"
                 android:maxLines="1"
@@ -196,7 +196,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_marginTop="80dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="40dp"
             android:id="@+id/btn_respond"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
@@ -207,6 +207,7 @@
             app:backgroundTint="@color/element_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_m3_player" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
