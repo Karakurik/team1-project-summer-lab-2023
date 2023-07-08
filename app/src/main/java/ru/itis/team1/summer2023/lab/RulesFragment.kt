@@ -54,7 +54,7 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
                     }
                     if (checkIfValidName(name) && clickCount == 0) {
                         pref.edit {
-                            putString("PLAYER_NAME", etM1Player.text.toString())
+                            putString("PLAYER_NAME", name)
                         }
                         blockInputting(etM1Player)
                         showMessage(tvM2Oldman, ivOldman2)
