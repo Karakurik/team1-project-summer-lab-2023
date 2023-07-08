@@ -6,31 +6,21 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.os.bundleOf
 import com.google.android.material.textfield.TextInputEditText
-import ru.itis.team1.summer2023.lab.Difficulty.*
 import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
-import ru.itis.team1.summer2023.lab.databinding.InputLetterBinding
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
-
-        val difficulty = arguments?.get(DIFFICULTY) as Difficulty
-        val size = when (difficulty) {
-            EASY -> 4
-            NORMAL -> 5
-            HARD -> 6
-        }
         /* TODO:
         проверять введенные слова, менять длину слов, возможно стереть буквы?
         */
         binding?.run {
-
             listOf(
                 layoutWord1,
                 layoutWord2,
@@ -39,24 +29,19 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 layoutWord5,
                 layoutWord6
             ).forEach { word ->
-
-                val lettersBindingList: List<InputLetterBinding> = listOf(
-                    word.letter1,
-                    word.letter2,
-                    word.letter3,
-                    word.letter4,
-                    word.letter5,
-                    word.letter6
+                val lettersList: List<TextInputEditText> = listOf(
+                    word.letter1.etLetter,
+                    word.letter2.etLetter,
+                    word.letter3.etLetter,
+                    word.letter4.etLetter,
+                    word.letter5.etLetter,
+                    word.letter6.etLetter
                 )
 
-                adjustDifficulty(lettersBindingList, difficulty)
-
-                val lettersList: List<TextInputEditText> =
-                    lettersBindingList.map { letter -> letter.etLetter }
-
-
-
                 lettersList[0].isEnabled = true
+
+//                количество видимых элементов
+                val size = 5
 
 //                ответ
                 val str = "HELLO"
@@ -105,16 +90,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     }
 
-    private fun adjustDifficulty(lettersBindingList: List<InputLetterBinding>, difficulty: Difficulty) {
-        if (difficulty == NORMAL) {
-            lettersBindingList[5].root.visibility = View.GONE
-        } else if (difficulty == EASY) {
-            lettersBindingList[4].root.visibility = View.GONE
-            lettersBindingList[5].root.visibility = View.GONE
-        }
-
-    }
-
     private fun convertWord(lettersList: List<TextInputEditText>, answer: String) {
         for ((i, letter) in lettersList.withIndex()) {
 
@@ -158,13 +133,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    companion object {
-        private const val DIFFICULTY = "DIF"
-        fun createBundle(selectedDifficulty: Difficulty): Bundle {
-            return bundleOf(DIFFICULTY to selectedDifficulty)
-        }
     }
 
 }
