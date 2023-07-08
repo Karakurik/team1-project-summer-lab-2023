@@ -21,7 +21,7 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRulesBinding.bind(view)
-        val pref: SharedPreferences = requireContext().getSharedPreferences("Default", MODE_PRIVATE)
+        val pref: SharedPreferences = requireActivity().getPreferences(MODE_PRIVATE)
         binding?.apply {
             etM1Player.setOnFocusChangeListener{_, _ -> tiM1Player.isHintEnabled = false}
             if (pref.getBoolean("IS_CHAT_COMPLETED", false)) {
