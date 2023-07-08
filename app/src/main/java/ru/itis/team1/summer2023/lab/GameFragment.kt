@@ -71,8 +71,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 for (i in 0 until size) {
 
                     lettersList[i].setOnKeyListener(object : View.OnKeyListener {
-                        override fun onKey(p0: View?, keyCode: Int, p2: KeyEvent?): Boolean {
-                            if (keyCode == KeyEvent.KEYCODE_DEL && i > 0) {
+                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                            if (keyCode == KeyEvent.KEYCODE_DEL && event?.action == KeyEvent.ACTION_UP && i > 0) {
                                 lettersList[i - 1].text?.clear()
                                 lettersList[i - 1].isEnabled = true
                                 lettersList[i - 1].requestFocus()
@@ -110,7 +110,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
                         override fun afterTextChanged(p0: Editable?) {
                             lettersList[i].isEnabled = false
-                            userInput.append(lettersList[i].text.toString())
+                            if (p0.isNullOrEmpty()) {
+                                userInput.deleteCharAt(userInput.length - 1)
+                            } else {
+                                userInput.append(lettersList[i].text.toString())
+                            }
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
                                     convertWord(lettersList, answer, difficulty)
