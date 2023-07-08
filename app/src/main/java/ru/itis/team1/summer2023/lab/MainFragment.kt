@@ -20,10 +20,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         changeDifficulty(selectedDifficulty)
 
-        val pref: SharedPreferences = requireContext().getSharedPreferences("Default",
-            Context.MODE_PRIVATE
-        )
-        if (pref.getString("PLAYER_NAME", "Hacker") == "Hacker") {
+        val pref: SharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        if (pref.getString("PLAYER_NAME", null) == null) {
             findNavController().navigate(R.id.action_mainFragment_to_rulesFragment)
         }
 
