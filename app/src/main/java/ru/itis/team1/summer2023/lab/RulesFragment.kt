@@ -76,7 +76,7 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
     private fun navigateButton(button: MaterialButton) {
         button.text = resources.getString(R.string.got_it_message)
         button.setOnClickListener{
-            findNavController().navigate(R.id.action_rulesFragment_to_mainFragment)
+            findNavController().popBackStack()
         }
     }
     private fun restoreMessages(messages: HashMap<TextView, ImageView>) {
