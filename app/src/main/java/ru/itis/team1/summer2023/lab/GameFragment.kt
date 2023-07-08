@@ -33,7 +33,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             NORMAL -> 5
             HARD -> 6
         }
-
         createDict(difficulty)
         val answer = generateAnswer()
 
@@ -228,15 +227,14 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 }
                 val trophies = getInt(trophiesKey, 0) + 1
                 val set = TreeSet(getOrderedStringCollection("FOUND_WORDS"))
-                val setOfMeanings = TreeSet(getOrderedStringCollection("FOUND_WORDS_MEANINGS"))
+                // TODO: add definitions to answers
                 set.add(answer)
-                setOfMeanings.add(dictionary[answer])
+
 
                 edit {
                     putInt("GAMES_WON", won)
                     putInt(trophiesKey, trophies)
                     putOrderedStringCollection("FOUND_WORDS", set)
-                    putOrderedStringCollection("FOUND_WORDS_MEANINGS", setOfMeanings)
                 }
             }
         }
