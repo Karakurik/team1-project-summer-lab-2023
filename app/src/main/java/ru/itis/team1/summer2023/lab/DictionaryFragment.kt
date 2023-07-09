@@ -29,11 +29,6 @@ class DictionaryFragment : Fragment(R.layout.fragment_dictionary) {
     }
 
     private fun initAdapter() {
-        // TODO: decide on key
-//        val collection = requireActivity()
-//            .getPreferences(Context.MODE_PRIVATE)
-//            .getOrderedStringCollection("FOUND_WORDS")
-//        val list = ArrayList(collection)
         val activity = requireActivity() as MainActivity
         val bundle = activity.getDictionary()
         val list = requireActivity()

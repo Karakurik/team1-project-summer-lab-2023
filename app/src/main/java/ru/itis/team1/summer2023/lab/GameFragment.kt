@@ -21,11 +21,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
     private val dictionary = HashSet<String>()
+    private val difficulty = arguments?.get(DIFFICULTY) as Difficulty
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
-
-        val difficulty = arguments?.get(DIFFICULTY) as Difficulty
 
         val size = when (difficulty) {
             EASY -> 4
@@ -33,9 +32,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             HARD -> 6
         }
 
-        createDict(difficulty)
+        createDict()
 
-        val answer = generateAnswer(size)
+        val answer = generateAnswer()
 
         binding?.run {
 
@@ -61,7 +60,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                     word.letter6
                 )
 
-                adjustDifficulty(lettersBindingList, difficulty)
+                adjustDifficulty(lettersBindingList)
 
                 val lettersList: List<TextInputEditText> =
                     lettersBindingList.map { letter -> letter.etLetter }
@@ -117,9 +116,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             }
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
-                                    convertWord(lettersList, answer, difficulty)
+                                    convertWord(lettersList, answer)
                                     if (word == wordsList[wordsList.size - 1]) {
-                                        finishGame(false, answer, difficulty)
+                                        finishGame(false, answer)
                                     }
                                     openNextWord(iterator)
                                 } else {
@@ -135,7 +134,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     }
 
-    private fun createDict(difficulty: Difficulty) {
+    private fun createDict() {
         val inputStream = when (difficulty) {
             EASY -> requireContext().assets.open("words_4")
             NORMAL -> requireContext().assets.open("words_5")
@@ -151,24 +150,28 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         return activity.getDictionary().getString(answer)
     }
 
-    private fun generateAnswer(size: Int): String {
-        val foundWords = requireActivity()
-            .getPreferences(Context.MODE_PRIVATE)
-            .getOrderedStringCollection("FOUND_WORDS")
-//            TODO проверить что остались неотгаданные слова
-        var str: String
-        while (true) {
-            str = dictionary.random()
-            if (str.length == size && !foundWords.contains (str)) {
-                return str
+    private fun generateAnswer(): String {
+        requireActivity().getPreferences(Context.MODE_PRIVATE).run {
+            val foundWords = getOrderedStringCollection("FOUND_WORDS")
+            val key = when (difficulty) {
+                EASY -> "GOLD_TROPHIES"
+                NORMAL -> "SILVER_TROPHIES"
+                HARD -> "BRONZE_TROPHIES"
+            }
+            if (getInt(key, 0) > dictionary.size) {
+//                TODO
+            }
+            var str: String
+            while (true) {
+                str = dictionary.random()
+                if (!foundWords.contains (str)) {
+                    return str
+                }
             }
         }
     }
 
-    private fun adjustDifficulty(
-        lettersBindingList: MutableList<InputLetterBinding>,
-        difficulty: Difficulty
-    ) {
+    private fun adjustDifficulty(lettersBindingList: MutableList<InputLetterBinding>) {
         if (difficulty == NORMAL) {
             lettersBindingList[5].root.visibility = View.GONE
             lettersBindingList.removeAt(5)
@@ -187,7 +190,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
     }
 
-    private fun convertWord(lettersList: List<TextInputEditText>, answer: String, difficulty: Difficulty) {
+    private fun convertWord(lettersList: List<TextInputEditText>, answer: String) {
         var isAnswer = true
         for ((i, letter) in lettersList.withIndex()) {
 
@@ -216,11 +219,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         }
         if (isAnswer) {
-            finishGame(true, answer, difficulty)
+            finishGame(true, answer)
         }
     }
 
-    private fun finishGame(isWin: Boolean, answer: String, difficulty: Difficulty) {
+    private fun finishGame(isWin: Boolean, answer: String) {
         requireActivity().getPreferences(Context.MODE_PRIVATE).run {
             val total = getInt("TOTAL_GAMES", 0) + 1
             edit { putInt("TOTAL_GAMES", total) }
