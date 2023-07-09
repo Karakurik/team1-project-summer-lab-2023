@@ -123,7 +123,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
 
-                                    convertWord(lettersList, answer, difficulty)
+                                    convertWord(lettersList, answer)
                                     if (!isWin && word == wordsList[wordsList.size - 1]) {
                                         finishGame(false, answer)
 
@@ -264,18 +264,22 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             }
         }
 
-        // TODO: add more responses
         val oldmanResponseId: Int = if (isWin) {
             listOf(
-                R.string.game_win_text_1
+                R.string.game_win_text_1,
+                R.string.game_win_text_2,
+                R.string.game_win_text_3,
+                R.string.game_win_text_4
             ).random()
         } else {
             listOf(
-                R.string.game_lose_text_1
+                R.string.game_lose_text_1,
+                R.string.game_lose_text_2,
+                R.string.game_lose_text_3
             ).random()
         }
         var oldmanResponse = resources.getString(oldmanResponseId)
-        if (isWin) oldmanResponse = oldmanResponse.format(answer)
+        if (isWin) oldmanResponse = oldmanResponse.format(answer + " - " + getAnswerDefinition(answer))
 
         binding?.layoutOverlay?.run {
             tvTitle.text = resources.getString(if (isWin) R.string.victory_text else R.string.defeat_text)
