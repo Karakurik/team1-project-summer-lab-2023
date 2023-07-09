@@ -27,4 +27,5 @@
     <string name="defeat_text">Defeat</string>
     <string name="game_win_text_1">That was a tough one! I guess you are better than I expected… Here is the definition: %1$s.</string>
     <string name="game_lose_text_1">Ha, I told you, no one can handle this. But you can have another try, just for fun.</string>
+    <string name="plus_1_text">+1</string>
 </resources>
