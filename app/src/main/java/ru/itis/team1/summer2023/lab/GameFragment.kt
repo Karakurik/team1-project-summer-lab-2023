@@ -123,7 +123,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
 
-                                    convertWord(lettersList, answer, difficulty)
+                                    convertWord(lettersList, answer)
                                     if (!isWin && word == wordsList[wordsList.size - 1]) {
                                         finishGame(false, answer)
 
@@ -275,7 +275,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             ).random()
         }
         var oldmanResponse = resources.getString(oldmanResponseId)
-        if (isWin) oldmanResponse = oldmanResponse.format(answer)
+        if (isWin) {
+            val definition = answer + " - " + (requireActivity() as MainActivity).getDictionary().getString(answer)
+            oldmanResponse = oldmanResponse.format(definition)
+        }
 
         binding?.layoutOverlay?.run {
             tvTitle.text = resources.getString(if (isWin) R.string.victory_text else R.string.defeat_text)
