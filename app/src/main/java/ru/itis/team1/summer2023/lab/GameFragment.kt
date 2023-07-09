@@ -137,9 +137,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun createDict(difficulty: Difficulty) {
         val inputStream = when (difficulty) {
-            EASY -> requireContext().assets.open("dictionary_4")
-            NORMAL -> requireContext().assets.open("dictionary_5")
-            HARD -> requireContext().assets.open("dictionary_6")
+            EASY -> requireContext().assets.open("words_4")
+            NORMAL -> requireContext().assets.open("words_5")
+            HARD -> requireContext().assets.open("words_6")
         }
         inputStream.bufferedReader().forEachLine {
             dictionary.add(it)

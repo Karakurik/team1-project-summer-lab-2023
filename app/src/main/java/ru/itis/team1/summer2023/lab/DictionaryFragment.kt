@@ -30,8 +30,18 @@ class DictionaryFragment : Fragment(R.layout.fragment_dictionary) {
 
     private fun initAdapter() {
         // TODO: decide on key
-        val collection = requireActivity().getPreferences(Context.MODE_PRIVATE).getOrderedStringCollection("FOUND_WORDS")
-        val list = ArrayList(collection)
+//        val collection = requireActivity()
+//            .getPreferences(Context.MODE_PRIVATE)
+//            .getOrderedStringCollection("FOUND_WORDS")
+//        val list = ArrayList(collection)
+        val activity = requireActivity() as MainActivity
+        val bundle = activity.getDictionary()
+        val list = requireActivity()
+            .getPreferences(Context.MODE_PRIVATE)
+            .getOrderedStringCollection("FOUND_WORDS")
+            .map{
+                word -> word + " - " + bundle.getString(word)
+            }
 
         adapter = WordAdapter(list)
         binding?.rvWords?.adapter = adapter
@@ -42,11 +52,4 @@ class DictionaryFragment : Fragment(R.layout.fragment_dictionary) {
         binding = null
     }
 
-    companion object {
-        private const val DICTIONARY = "DICTIONARY"
-        fun createBundle(dictionary: HashMap<String, String>): Bundle {
-            return bundleOf(DICTIONARY to dictionary)
-        }
-
-    }
 }

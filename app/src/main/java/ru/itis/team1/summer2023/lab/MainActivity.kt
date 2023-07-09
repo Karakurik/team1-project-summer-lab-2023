@@ -9,7 +9,7 @@ import androidx.core.os.bundleOf
 
 class MainActivity : AppCompatActivity() {
 
-    private val dictionary =  HashMap<String, String>()
+    private lateinit var dictionary: Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,16 +19,19 @@ class MainActivity : AppCompatActivity() {
         anim.setInterpolator(this, android.R.anim.linear_interpolator)
         findViewById<ImageView>(R.id.scan_line).startAnimation(anim)
 
-        createDictionary()
+        dictionary = createDictionary()
 
     }
 
-    private fun createDictionary() {
+    private fun createDictionary(): Bundle {
+        val dictionary =  HashMap<String, String>()
+
         var str: List<String>
         assets.open("dictionary").bufferedReader().forEachLine {
             str = it.split("=")
             dictionary[str[0]] = str[1]
         }
+        return dictionary.toBundle()
     }
 
     private fun Map<String, String>.toBundle(): Bundle {
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getDictionary(): Bundle {
-        return dictionary.toBundle()
+        return dictionary
     }
 
 }
