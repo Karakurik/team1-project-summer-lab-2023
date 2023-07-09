@@ -3,6 +3,7 @@ package ru.itis.team1.summer2023.lab
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.itis.team1.summer2023.lab.databinding.FragmentDictionaryBinding
@@ -39,5 +40,13 @@ class DictionaryFragment : Fragment(R.layout.fragment_dictionary) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    companion object {
+        private const val DICTIONARY = "DICTIONARY"
+        fun createBundle(dictionary: HashMap<String, String>): Bundle {
+            return bundleOf(DICTIONARY to dictionary)
+        }
+
     }
 }

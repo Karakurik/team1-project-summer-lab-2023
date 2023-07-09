@@ -13,28 +13,29 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import ru.itis.team1.summer2023.lab.Difficulty.*
-import ru.itis.team1.summer2023.lab.databinding.FragmentGameBinding
-import ru.itis.team1.summer2023.lab.databinding.InputLetterBinding
-import ru.itis.team1.summer2023.lab.databinding.WordBinding
+import ru.itis.team1.summer2023.lab.databinding.*
 import java.util.TreeSet
 
 
 class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
-    private val dictionary = HashMap<String, String>()
+    private val dictionary = HashSet<String>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
 
         val difficulty = arguments?.get(DIFFICULTY) as Difficulty
+
         val size = when (difficulty) {
             EASY -> 4
             NORMAL -> 5
             HARD -> 6
         }
+
         createDict(difficulty)
-        val answer = generateAnswer()
+
+        val answer = generateAnswer(size)
 
         binding?.run {
 
@@ -140,22 +141,25 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             NORMAL -> requireContext().assets.open("dictionary_5")
             HARD -> requireContext().assets.open("dictionary_6")
         }
-        var str: List<String>
         inputStream.bufferedReader().forEachLine {
-            str = it.split("=")
-            dictionary[str[0]] = str[1]
+            dictionary.add(it)
         }
     }
 
-    private fun generateAnswer(): String {
+    private fun getAnswerDefinition(answer: String): String? {
+        val activity = requireActivity() as MainActivity
+        return activity.getDictionary().getString(answer)
+    }
+
+    private fun generateAnswer(size: Int): String {
         val foundWords = requireActivity()
             .getPreferences(Context.MODE_PRIVATE)
             .getOrderedStringCollection("FOUND_WORDS")
 //            TODO проверить что остались неотгаданные слова
         var str: String
         while (true) {
-            str = dictionary.keys.random()
-            if (!foundWords.contains (str)) {
+            str = dictionary.random()
+            if (str.length == size && !foundWords.contains (str)) {
                 return str
             }
         }
@@ -230,7 +234,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 }
                 val trophies = getInt(trophiesKey, 0) + 1
                 val set = TreeSet(getOrderedStringCollection("FOUND_WORDS"))
-                // TODO: add definitions to answers
                 set.add(answer)
 
 
@@ -277,7 +280,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
 
     private fun verifyWord(userInput: String): Boolean {
-        return dictionary.keys.contains(userInput.lowercase())
+        return dictionary.contains(userInput.lowercase())
     }
 
     override fun onDestroyView() {
@@ -286,7 +289,8 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
     companion object {
-        private const val DIFFICULTY = "DIF"
+
+        private const val DIFFICULTY = "DIFFICULTY"
         fun createBundle(selectedDifficulty: Difficulty): Bundle {
             return bundleOf(DIFFICULTY to selectedDifficulty)
         }
