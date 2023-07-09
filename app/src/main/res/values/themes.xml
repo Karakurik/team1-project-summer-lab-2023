@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Team1projectsummerlab2023" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -7,5 +7,6 @@
 
     <style name="Theme.Team1projectsummerlab2023" parent="Base.Theme.Team1projectsummerlab2023">
         <item name="fontFamily">@font/joystix</item>
+        <item name="colorPrimaryDark">@color/background</item>
     </style>
 </resources>
