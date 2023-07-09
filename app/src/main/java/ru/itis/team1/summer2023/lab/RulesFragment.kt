@@ -35,6 +35,8 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
                 setIndividualMessage(tvM2Oldman, name)
                 setIndividualMessage(tvM3Oldman, name)
                 blockInputting(etM1Player)
+                tiM1Player.isHintEnabled = false
+                etM1Player.setText(name)
                 navigateButton(btnRespond)
             } else {
                 btnRespond.setOnClickListener {

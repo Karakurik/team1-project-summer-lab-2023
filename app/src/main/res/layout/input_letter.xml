@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="56dp"
     android:layout_height="56dp"
+    app:boxStrokeWidth="0dp"
+    app:boxStrokeWidthFocused="0dp"
     android:background="@color/element_bg">
 
 
@@ -19,6 +21,7 @@
         android:textAllCaps="true"
         android:textColor="@color/text"
         android:textSize="18sp"
+        android:cursorVisible="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

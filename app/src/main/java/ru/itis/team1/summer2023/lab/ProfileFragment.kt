@@ -1,11 +1,8 @@
 package ru.itis.team1.summer2023.lab
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.itis.team1.summer2023.lab.databinding.FragmentProfileBinding
@@ -45,12 +42,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 findNavController().navigate(R.id.action_profileFragment_to_dictionaryFragment)
             }
         }
-    }
-
-    private fun ImageView.setScaledAliasedImageResource(resId: Int, width: Int, height: Int) {
-        var bmp = BitmapFactory.decodeResource(resources, resId)
-        bmp = Bitmap.createScaledBitmap(bmp, width, height, false)
-        setImageBitmap(bmp)
     }
 
     override fun onDestroyView() {

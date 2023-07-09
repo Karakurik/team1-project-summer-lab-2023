@@ -8,10 +8,12 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import ru.itis.team1.summer2023.lab.Difficulty.*
 import ru.itis.team1.summer2023.lab.databinding.*
 import java.util.TreeSet
@@ -20,8 +22,11 @@ import java.util.TreeSet
 class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
+
     private val dictionary = HashSet<String>()
     private var difficulty = NORMAL
+    private var isWin = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
@@ -117,9 +122,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             }
                             if (i == size - 1) {
                                 if (verifyWord(userInput.toString())) {
-                                    convertWord(lettersList, answer)
-                                    if (word == wordsList[wordsList.size - 1]) {
+
+                                    convertWord(lettersList, answer, difficulty)
+                                    if (!isWin && word == wordsList[wordsList.size - 1]) {
                                         finishGame(false, answer)
+
                                     }
                                     openNextWord(iterator)
                                 } else {
@@ -129,6 +136,13 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                             }
                         }
                     })
+
+                    lettersList[i].setOnFocusChangeListener { v, hasFocus ->
+                        val ti = v.parent.parent as TextInputLayout // first parent - FrameLayout
+                        val colorId = if (hasFocus) R.color.element_bg_focused else R.color.element_bg
+                        val color = ContextCompat.getColor(requireContext(), colorId)
+                        ti.setBackgroundColor(color)
+                    }
                 }
             }
         }
@@ -221,6 +235,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
         if (isAnswer) {
             finishGame(true, answer)
+            isWin = true
         }
     }
 
@@ -265,6 +280,17 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         binding?.layoutOverlay?.run {
             tvTitle.text = resources.getString(if (isWin) R.string.victory_text else R.string.defeat_text)
             tvOldman.text = oldmanResponse
+
+            if (isWin) {
+                val trophyResId = when (difficulty) {
+                    EASY -> R.drawable.trophy3
+                    NORMAL -> R.drawable.trophy2
+                    HARD -> R.drawable.trophy1
+                }
+                ivTrophy.setScaledAliasedImageResource(trophyResId, 24, 24)
+            } else {
+                llTrophy.visibility = View.GONE
+            }
 
             btnBack.setOnClickListener {
                 findNavController().popBackStack()
