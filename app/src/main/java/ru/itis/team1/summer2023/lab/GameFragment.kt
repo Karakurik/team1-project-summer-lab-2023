@@ -21,10 +21,11 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private var binding: FragmentGameBinding? = null
     private val dictionary = HashSet<String>()
-    private val difficulty = arguments?.get(DIFFICULTY) as Difficulty
+    private var difficulty = NORMAL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
+        difficulty = arguments?.get(DIFFICULTY) as Difficulty
 
         val size = when (difficulty) {
             EASY -> 4

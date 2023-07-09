@@ -3,11 +3,10 @@ package ru.itis.team1.summer2023.lab
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.itis.team1.summer2023.lab.databinding.FragmentDictionaryBinding
-import java.util.ArrayList
+
 
 class DictionaryFragment : Fragment(R.layout.fragment_dictionary) {
     private var binding: FragmentDictionaryBinding? = null
