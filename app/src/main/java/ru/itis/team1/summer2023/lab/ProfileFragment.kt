@@ -16,16 +16,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         binding?.apply {
             requireActivity().getPreferences(Context.MODE_PRIVATE).run {
-                // TODO: decide on key names and maybe move them into values/strings.xml
-                tvPlayerName.text = getString("PLAYER_NAME", "playername")
-                tvTrophies1.text = getInt("GOLD_TROPHIES", 0).toString()
-                tvTrophies2.text = getInt("SILVER_TROPHIES", 0).toString()
-                tvTrophies3.text = getInt("BRONZE_TROPHIES", 0).toString()
-                val totalGames = getInt("TOTAL_GAMES", 0)
+                val playerNameKey = getString(R.string.pref_key_player_name)
+                val goldTrophiesKey = getString(R.string.pref_key_gold_trophies)
+                val silverTrophiesKey = getString(R.string.pref_key_silver_trophies)
+                val bronzeTrophiesKey = getString(R.string.pref_key_bronze_trophies)
+                val totalGamesKey = getString(R.string.pref_key_total_games)
+                val gamesWonKey = getString(R.string.pref_key_games_won)
+
+                tvPlayerName.text = getString(playerNameKey, "playername")
+                tvTrophies1.text = getInt(goldTrophiesKey, 0).toString()
+                tvTrophies2.text = getInt(silverTrophiesKey, 0).toString()
+                tvTrophies3.text = getInt(bronzeTrophiesKey, 0).toString()
+                val totalGames = getInt(totalGamesKey, 0)
                 tvTotal.text = getString(R.string.total_games_text, totalGames)
                 val gamesWonPercentage = when (totalGames) {
                     0 -> 0.0
-                    else -> getInt("GAMES_WON", 0).toDouble() / totalGames.toDouble() * 100.0
+                    else -> getInt(gamesWonKey, 0).toDouble() / totalGames.toDouble() * 100.0
                 }
                 tvPercentage.text =
                     getString(R.string.games_won_text, gamesWonPercentage)

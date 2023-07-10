@@ -32,7 +32,7 @@ class DictionaryFragment : Fragment(R.layout.fragment_dictionary) {
         val bundle = activity.getDictionary()
         val list = requireActivity()
             .getPreferences(Context.MODE_PRIVATE)
-            .getOrderedStringCollection("FOUND_WORDS")
+            .getOrderedStringCollection(getString(R.string.pref_key_found_words))
             .map{
                 word -> word + " - " + bundle.getString(word)
             }

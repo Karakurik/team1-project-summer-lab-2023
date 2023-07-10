@@ -34,4 +34,14 @@
     <string name="game_lose_text_3">Hackers come and go but my passwords are timeless. Something’s telling me this is’t the last time you’re knocked down by this one…</string>
     <string name="plus_1_text">+1</string>
     <string name="game_over_text">Oops, looks like you hacked the system! There are no passwords left! I can\'t believe you won…</string>
+    <string name="username_constraints_text">The username has a min length of 1 and a max length of 25 and can only use letters of Latin alphabet and digits</string>
+
+    <string name="pref_key_found_words" translatable="false">FOUND_WORDS</string>
+    <string name="pref_key_gold_trophies" translatable="false">GOLD_TROPHIES</string>
+    <string name="pref_key_silver_trophies" translatable="false">SILVER_TROPHIES</string>
+    <string name="pref_key_bronze_trophies" translatable="false">BRONZE_TROPHIES</string>
+    <string name="pref_key_total_games" translatable="false">TOTAL_GAMES</string>
+    <string name="pref_key_games_won" translatable="false">GAMES_WON</string>
+    <string name="pref_key_player_name" translatable="false">PLAYER_NAME</string>
+    <string name="pref_key_chat_completed" translatable="false">IS_CHAT_COMPLETED</string>
 </resources>

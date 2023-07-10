@@ -15,12 +15,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        startScanLineAnimation()
+
+        dictionary = createDictionary()
+    }
+
+    private fun startScanLineAnimation() {
         val anim = AnimationUtils.loadAnimation(this, R.anim.scan_animation)
         anim.setInterpolator(this, android.R.anim.linear_interpolator)
         findViewById<ImageView>(R.id.scan_line).startAnimation(anim)
-
-        dictionary = createDictionary()
-
     }
 
     private fun createDictionary(): Bundle {
@@ -41,8 +44,6 @@ class MainActivity : AppCompatActivity() {
         return bundleOf(*pairs)
     }
 
-    fun getDictionary(): Bundle {
-        return dictionary
-    }
+    fun getDictionary(): Bundle = dictionary
 
 }

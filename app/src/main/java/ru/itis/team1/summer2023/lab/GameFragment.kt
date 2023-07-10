@@ -1,9 +1,7 @@
 package ru.itis.team1.summer2023.lab
 
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
@@ -35,7 +33,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentGameBinding.bind(view)
-        difficulty = arguments?.get(DIFFICULTY) as Difficulty
+        difficulty = arguments?.get(DIFFICULTY_ARG) as Difficulty
 
         val size = when (difficulty) {
             EASY -> 4
@@ -167,13 +165,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun generateAnswer(): String {
         requireActivity().getPreferences(Context.MODE_PRIVATE).run {
-            val foundWords = getOrderedStringCollection("FOUND_WORDS")
-            val key = when (difficulty) {
-                EASY -> "GOLD_TROPHIES"
-                NORMAL -> "SILVER_TROPHIES"
-                HARD -> "BRONZE_TROPHIES"
-            }
-            if (getInt(key, 0) > dictionary.size) {
+            val foundWords = getOrderedStringCollection(getString(R.string.pref_key_found_words))
+            val trophiesKey = getTrophiesPrefKey()
+            if (getInt(trophiesKey, 0) > dictionary.size) {
                 finishGame()
             }
             var str: String
@@ -188,7 +182,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun finishGame() {
         binding?.layoutOverlay?.run {
-            tvOldman.text = resources.getString(R.string.game_over_text)
+            tvOldman.text = getString(R.string.game_over_text)
             llTrophy.visibility = View.GONE
             btnBack.setOnClickListener {
                 findNavController().popBackStack()
@@ -253,25 +247,25 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     private fun finishGame(isWin: Boolean, answer: String) {
         requireActivity().getPreferences(Context.MODE_PRIVATE).run {
-            val total = getInt("TOTAL_GAMES", 0) + 1
-            edit { putInt("TOTAL_GAMES", total) }
+            val totalGamesKey = getString(R.string.pref_key_total_games)
+            val total = getInt(totalGamesKey, 0) + 1
+            edit { putInt(totalGamesKey, total) }
 
             if (isWin) {
-                val won = getInt("GAMES_WON", 0) + 1
-                val trophiesKey = when (difficulty) {
-                    EASY -> "BRONZE_TROPHIES"
-                    NORMAL -> "SILVER_TROPHIES"
-                    HARD -> "GOLD_TROPHIES"
-                }
+                val gamesWonKey = getString(R.string.pref_key_games_won)
+                val won = getInt(gamesWonKey, 0) + 1
+
+                val trophiesKey = getTrophiesPrefKey()
                 val trophies = getInt(trophiesKey, 0) + 1
-                val set = TreeSet(getOrderedStringCollection("FOUND_WORDS"))
+
+                val foundWordsKey = getString(R.string.pref_key_found_words)
+                val set = TreeSet(getOrderedStringCollection(foundWordsKey))
                 set.add(answer)
 
-
                 edit {
-                    putInt("GAMES_WON", won)
+                    putInt(gamesWonKey, won)
                     putInt(trophiesKey, trophies)
-                    putOrderedStringCollection("FOUND_WORDS", set)
+                    putOrderedStringCollection(foundWordsKey, set)
                 }
             }
         }
@@ -302,8 +296,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             if (isWin) {
                 val spannable: Spannable = SpannableString(oldmanResponse)
                 val answerIndex = oldmanResponse.indexOf(answer)
+                val color = requireActivity().getColor(R.color.primary)
                 spannable.setSpan(
-                    ForegroundColorSpan(Color.GREEN),
+                    ForegroundColorSpan(color),
                     answerIndex,
                     answerIndex + answer.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -341,9 +336,15 @@ class GameFragment : Fragment(R.layout.fragment_game) {
     }
 
 
-    private fun verifyWord(userInput: String): Boolean {
-        return dictionary.contains(userInput.lowercase())
-    }
+    private fun verifyWord(userInput: String): Boolean = dictionary.contains(userInput.lowercase())
+
+    private fun getTrophiesPrefKey(): String = getString(
+        when (difficulty) {
+            EASY -> R.string.pref_key_bronze_trophies
+            NORMAL -> R.string.pref_key_silver_trophies
+            HARD -> R.string.pref_key_gold_trophies
+        }
+    )
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -352,9 +353,9 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
     companion object {
 
-        private const val DIFFICULTY = "DIFFICULTY"
+        private const val DIFFICULTY_ARG = "DIFFICULTY"
         fun createBundle(selectedDifficulty: Difficulty): Bundle {
-            return bundleOf(DIFFICULTY to selectedDifficulty)
+            return bundleOf(DIFFICULTY_ARG to selectedDifficulty)
         }
     }
 
