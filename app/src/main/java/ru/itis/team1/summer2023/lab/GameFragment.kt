@@ -160,11 +160,6 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
     }
 
-    private fun getAnswerDefinition(answer: String): String? {
-        val activity = requireActivity() as MainActivity
-        return activity.getDictionary().getString(answer)
-    }
-
     private fun generateAnswer(): String {
         requireActivity().getPreferences(Context.MODE_PRIVATE).run {
             val foundWords = getOrderedStringCollection("FOUND_WORDS")
@@ -174,7 +169,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                 HARD -> "BRONZE_TROPHIES"
             }
             if (getInt(key, 0) > dictionary.size) {
-//                TODO
+                finishGame()
             }
             var str: String
             while (true) {
@@ -183,6 +178,17 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                     return str
                 }
             }
+        }
+    }
+
+    private fun finishGame() {
+        binding?.layoutOverlay?.run {
+            tvOldman.text = resources.getString(R.string.game_over_text)
+            llTrophy.visibility = View.GONE
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+            root.visibility = View.VISIBLE
         }
     }
 
