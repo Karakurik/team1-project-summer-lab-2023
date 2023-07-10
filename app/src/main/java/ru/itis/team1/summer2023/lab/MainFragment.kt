@@ -20,8 +20,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         changeDifficulty(selectedDifficulty)
 
+        val playerNameKey = getString(R.string.pref_key_player_name)
         val pref: SharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        if (pref.getString("PLAYER_NAME", null) == null) {
+        if (pref.getString(playerNameKey, null) == null) {
             findNavController().navigate(R.id.action_mainFragment_to_rulesFragment)
         }
 
@@ -34,8 +35,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 findNavController().navigate(R.id.action_mainFragment_to_profileFragment)
             }
             btnStart.setOnClickListener {
-                findNavController().navigate(R.id.action_mainFragment_to_gameFragment,
-                GameFragment.createBundle(selectedDifficulty))
+                findNavController().navigate(
+                    R.id.action_mainFragment_to_gameFragment,
+                    GameFragment.createBundle(selectedDifficulty)
+                )
             }
             btnRules.setOnClickListener {
                 findNavController().navigate(R.id.action_mainFragment_to_rulesFragment)

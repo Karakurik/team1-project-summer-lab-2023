@@ -24,8 +24,11 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
         val pref: SharedPreferences = requireActivity().getPreferences(MODE_PRIVATE)
         binding?.apply {
             etM1Player.setOnFocusChangeListener{_, _ -> tiM1Player.isHintEnabled = false}
-            if (pref.getBoolean("IS_CHAT_COMPLETED", false)) {
-                val name = pref.getString("PLAYER_NAME", "Hacker")!!
+
+            val chatCompletedKey = getString(R.string.pref_key_chat_completed)
+            val playerNameKey = getString(R.string.pref_key_player_name)
+            if (pref.getBoolean(chatCompletedKey, false)) {
+                val name = pref.getString(playerNameKey, "Hacker")!!
                 val messages: HashMap<TextView, ImageView> = HashMap()
                 messages[tvM2Oldman] = ivOldman2
                 messages[tvM2Player] = ivPlayer2
@@ -49,14 +52,14 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
                         showMessage(tvM3Player, ivPlayer3)
                         clickCount++
                         pref.edit {
-                            putBoolean("IS_CHAT_COMPLETED", true)
+                            putBoolean(chatCompletedKey, true)
                         }
                         navigateButton(btnRespond)
                         // from now on the button must bring Player back to the Main screen
                     }
                     if (checkIfValidName(name) && clickCount == 0) {
                         pref.edit {
-                            putString("PLAYER_NAME", name)
+                            putString(playerNameKey, name)
                         }
                         blockInputting(etM1Player)
                         showMessage(tvM2Oldman, ivOldman2)
@@ -85,8 +88,7 @@ class RulesFragment: Fragment(R.layout.fragment_rules) {
         messages.forEach { (m, i) ->  showMessage(m, i)}
     }
     private fun showSnackbar(view: View) {
-        val snackbar = Snackbar.make(view, "The username has a min length of 1 and a max length of 25 and" +
-                " can only use letters of Latin alphabet and digits", Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(view, getString(R.string.username_constraints_text), Snackbar.LENGTH_LONG)
         snackbar.setDuration(8000).setTextMaxLines(4).show()
     }
 
