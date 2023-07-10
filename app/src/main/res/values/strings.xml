@@ -33,4 +33,5 @@
     <string name="game_lose_text_2">Got you! For a second there I really thought you’d had a chance… I don’t anymore! Since I found your Achilles’ heel I might be using this very password in the future, so keep it up!</string>
     <string name="game_lose_text_3">Hackers come and go but my passwords are timeless. Something’s telling me this is’t the last time you’re knocked down by this one…</string>
     <string name="plus_1_text">+1</string>
+    <string name="game_over_text">Oops, looks like you hacked the system! There are no passwords left! I can\'t believe you won…</string>
 </resources>
