@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">team1-project-summer-lab-2023</string>
+    <string name="app_name">passWordly</string>
     <string name="m1_oldman">Hey, wanderer! You must be that hacker I’ve been hearing so much about… Doesn’t matter. Nobody can do it. Many have tried… What’s your name? Who knows, maybe when you lose I can use it as my password. And remember once you say it there is no way back!</string>
     <string name="m2_oldman">Well, Name, let’s get this over with. The rules of the game are quite simple: you will be given a password — a singular noun consisting of 4, 5 or 6 letters depending on the difficulty you chose. You are going to have to use all your vocabulary to crack the password by sequentially entering words consisting of the same number of letters the password does. If an entered word contains a letter that appears in the password, one of two things can happen: the letter will turn green if its position in the entered word matches its position in the password and yellow if it doesn’t. Each entered word must actually exist. You’re allowed 6 guesses. It may take you less than 6 but I really doubt that… For each cracked password I’ll give you one trophy: bronze – for a 4-letter password, silver – for a 5-letter and finally gold – for a 6-letter.</string>
     <string name="got_it_message">Got it!</string>
