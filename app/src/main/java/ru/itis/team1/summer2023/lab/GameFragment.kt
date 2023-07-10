@@ -1,16 +1,21 @@
 package ru.itis.team1.summer2023.lab
 
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -245,6 +250,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
     }
 
+
     private fun finishGame(isWin: Boolean, answer: String) {
         requireActivity().getPreferences(Context.MODE_PRIVATE).run {
             val total = getInt("TOTAL_GAMES", 0) + 1
@@ -270,17 +276,22 @@ class GameFragment : Fragment(R.layout.fragment_game) {
             }
         }
 
-        // TODO: add more responses
         val oldmanResponseId: Int = if (isWin) {
             listOf(
-                R.string.game_win_text_1
+                R.string.game_win_text_1,
+                R.string.game_win_text_2,
+                R.string.game_win_text_3,
+                R.string.game_win_text_4
             ).random()
         } else {
             listOf(
-                R.string.game_lose_text_1
+                R.string.game_lose_text_1,
+                R.string.game_lose_text_2,
+                R.string.game_lose_text_3
             ).random()
         }
         var oldmanResponse = resources.getString(oldmanResponseId)
+
         if (isWin) {
             val definition = answer + " - " + (requireActivity() as MainActivity).getDictionary().getString(answer)
             oldmanResponse = oldmanResponse.format(definition)
@@ -288,7 +299,19 @@ class GameFragment : Fragment(R.layout.fragment_game) {
 
         binding?.layoutOverlay?.run {
             tvTitle.text = resources.getString(if (isWin) R.string.victory_text else R.string.defeat_text)
-            tvOldman.text = oldmanResponse
+            if (isWin) {
+                val spannable: Spannable = SpannableString(oldmanResponse)
+                val answerIndex = oldmanResponse.indexOf(answer)
+                spannable.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    answerIndex,
+                    answerIndex + answer.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                tvOldman.text = spannable
+            } else {
+                tvOldman.text = oldmanResponse
+            }
 
             if (isWin) {
                 val trophyResId = when (difficulty) {
